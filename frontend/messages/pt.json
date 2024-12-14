@@ -1,0 +1,5 @@
+{
+	"$schema": "https://inlang.com/schema/inlang-message-format",
+	"welcome": "Bem-vindo ao Krampus, o Secret Santa amigável à privacidade! 🎅",
+  "new_draw": "Novo sorteio"
+}

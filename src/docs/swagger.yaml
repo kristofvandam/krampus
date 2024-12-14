@@ -1,0 +1,242 @@
+basePath: /api/v1
+definitions:
+  drawing.Drawing:
+    properties:
+      config:
+        $ref: '#/definitions/drawing.DrawingConfig'
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      groups:
+        items:
+          $ref: '#/definitions/drawing.DrawingGroup'
+        type: array
+      members:
+        items:
+          $ref: '#/definitions/drawing.DrawingMember'
+        type: array
+      name:
+        type: string
+      slug:
+        type: string
+      updated_at:
+        type: string
+      uuid:
+        type: string
+      visited_at:
+        type: string
+    type: object
+  drawing.DrawingConfig:
+    properties:
+      chained:
+        type: boolean
+      prevent_group_members:
+        type: boolean
+      price:
+        type: integer
+      renew_link:
+        type: boolean
+    type: object
+  drawing.DrawingGroup:
+    properties:
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      drawing_uuid:
+        type: string
+      members:
+        items:
+          $ref: '#/definitions/drawing.DrawingMember'
+        type: array
+      name:
+        type: string
+      updated_at:
+        type: string
+      uuid:
+        type: string
+    type: object
+  drawing.DrawingMember:
+    properties:
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      drawing_group_uuid:
+        type: string
+      drawing_uuid:
+        type: string
+      drawn_member:
+        $ref: '#/definitions/drawing.DrawingMember'
+      name:
+        type: string
+      updated_at:
+        type: string
+      uuid:
+        type: string
+      wishes:
+        items:
+          $ref: '#/definitions/drawing.DrawingMemberWish'
+        type: array
+    type: object
+  drawing.DrawingMemberWish:
+    properties:
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      drawing_member_uuid:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+      uuid:
+        type: string
+    type: object
+  main.defaultResponse:
+    properties:
+      message:
+        type: string
+      status:
+        type: integer
+    type: object
+info:
+  contact: {}
+  description: A Privacy Friendly Secret Santa Service
+  title: Krampus API
+  version: "1.0"
+paths:
+  /draw:
+    post:
+      consumes:
+      - application/json
+      description: Create a drawing
+      parameters:
+      - description: Drawing data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/drawing.Drawing'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/drawing.Drawing'
+      summary: Create a drawing
+      tags:
+      - Drawing
+  /draw/{uuid}:
+    get:
+      description: Get a drawing by name
+      parameters:
+      - description: Drawing UUID
+        in: path
+        name: uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/drawing.Drawing'
+      summary: Show a drawing
+      tags:
+      - Drawing
+    patch:
+      consumes:
+      - application/json
+      description: Update a drawing by name
+      parameters:
+      - description: Drawing UUID
+        in: path
+        name: uuid
+        required: true
+        type: string
+      - description: Drawing data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/drawing.Drawing'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/drawing.Drawing'
+      summary: Update a drawing
+      tags:
+      - Drawing
+  /draw/{uuid}/member:
+    post:
+      consumes:
+      - application/json
+      description: Create a member for a drawing
+      parameters:
+      - description: Drawing UUID
+        in: path
+        name: uuid
+        required: true
+        type: string
+      - description: Member data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/drawing.DrawingMember'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/drawing.DrawingMember'
+      summary: Member create
+      tags:
+      - Drawing
+  /draw/{uuid}/member/{memberUuid}:
+    get:
+      description: Get a member by name
+      parameters:
+      - description: Drawing UUID
+        in: path
+        name: uuid
+        required: true
+        type: string
+      - description: Member UUID
+        in: path
+        name: memberUuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/drawing.DrawingMember'
+      summary: Show a member
+      tags:
+      - Member
+  /health:
+    get:
+      description: Check if the service is running
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.defaultResponse'
+      summary: Health check
+      tags:
+      - Health
+swagger: "2.0"
