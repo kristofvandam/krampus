@@ -1,11 +1,13 @@
 <script lang="ts">
-	import * as m from '$lib/paraglide/messages.js';
-  import { goto } from '$app/navigation';
-  import * as api from '$lib/api';
+	import * as m from '$lib/paraglide/messages.js'
+  import { goto } from '$app/navigation'
+  import { i18n } from '$lib/i18n'
+  import * as api from '$lib/api'
+  import { page } from '$app/stores'
 
   async function newDraw() {
-    const draw = await api.createDraw();
-    goto(`/draw/${draw.uuid}`);
+    const draw = await api.createDraw()
+    goto(i18n.resolveRoute(`/draw/${draw.uuid}`))
   }
 </script>
 
@@ -14,5 +16,5 @@
     <h2>{m.welcome()}</h2>
   </header>
 
-  <button on:click={() => newDraw()}>{m.new_draw()}</button>
+  <button on:click={() => newDraw()}>{m.draw_create()}</button>
 </div>

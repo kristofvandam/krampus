@@ -1,0 +1,9 @@
+{
+  debug
+}
+
+:8081 {
+  root * build
+  try_files {path} {path}/ index.html
+}
+

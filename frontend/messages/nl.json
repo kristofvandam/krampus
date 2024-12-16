@@ -1,5 +1,15 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
 	"welcome": "Welkom bij Krampus, de privacyvriendelijke Secret Santa! 🎅",
-  "new_draw": "Nieuwe trekking"
+  "form_submit": "Verzenden",
+  "form_cancel": "Annuleren",
+  "form_save": "Opslaan",
+  "form_delete": "Verwijderen",
+  "form_edit": "Bewerken",
+  "nav_home": "Home",
+  "draw_create": "Nieuwe trekking",
+  "member_title": "Leden",
+  "member_name": "Naam van lid",
+  "member_create": "Lid toevoegen",
+  "member_delete": "Lid verwijderen"
 }

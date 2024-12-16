@@ -1,5 +1,15 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
 	"welcome": "Bem-vindo ao Krampus, o Secret Santa amigável à privacidade! 🎅",
-  "new_draw": "Novo sorteio"
+  "form_submit": "Enviar",
+  "form_cancel": "Cancelar",
+  "form_save": "Salvar",
+  "form_delete": "Excluir",
+  "form_edit": "Editar",
+  "nav_home": "Início",
+  "draw_create": "Nova sorteio",
+  "member_title": "Membros",
+  "member_name": "Nome do membro",
+  "member_create": "Adicionar membro",
+  "member_delete": "Excluir membro"
 }

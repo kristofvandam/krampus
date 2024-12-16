@@ -17,7 +17,7 @@ func loadRouter() {
 	r := gin.New()
 	r.Use(gin.Recovery())
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:  []string{"http://localhost:5173", "http://localhost:4173"},
+		AllowOrigins:  []string{"http://localhost:5173", "http://localhost:4173", "http://localhost:8081"},
 		AllowMethods:  []string{"OPTIONS", "GET", "POST", "PATCH", "DELETE"},
 		AllowHeaders:  []string{"Origin", "Content-Length", "Content-Type"},
 		ExposeHeaders: []string{"Content-Length"},

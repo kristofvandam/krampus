@@ -1,5 +1,17 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
 	"welcome": "Welcome to Krampus, the privacy friendly Secret Santa! 🎅",
-  "new_draw": "New draw"
+  "form_submit": "Submit",
+  "form_cancel": "Cancel",
+  "form_save": "Save",
+  "form_delete": "Delete",
+  "form_edit": "Edit",
+  "nav_home": "Home",
+  "draw_create": "New draw",
+  "draw_config": "Draw configuration",
+  "draw_config_chained": "Chained draw",
+  "member_title": "Members",
+  "member_name": "Member Name",
+  "member_create": "Add member",
+  "member_delete": "Delete member"
 }
