@@ -10,6 +10,7 @@
   "draw_create": "New draw",
   "draw_config": "Draw configuration",
   "draw_config_chained": "Chained draw",
+  "draw_config_price": "Price limit",
   "member_title": "Members",
   "member_name": "Member Name",
   "member_create": "Add member",

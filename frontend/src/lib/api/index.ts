@@ -24,7 +24,8 @@ export async function createDraw() {
   });
 }
 
-export async function getDraw(uuid: string) {
+export async function getDraw(fetch: any, uuid: string) {
+  console.log('getDraw', uuid);
   return await fetch('http://localhost:8080/api/v1/draw/' + uuid, {
     method: 'GET'
   })

@@ -38,6 +38,12 @@ func (ctrl *Controller) DeleteHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		member := c.MustGet("member").(Member)
 
+		ctrl.Log.Info("deleting member",
+			"drawUuid", member.DrawingUUID,
+			"memberUuid", member.UUID,
+			"name", member.Name,
+		)
+
 		if _, err := ctrl.DB.NewDelete().
 			Model(&member).
 			Where("uuid = ?", member.UUID).
@@ -49,6 +55,12 @@ func (ctrl *Controller) DeleteHandler() gin.HandlerFunc {
 			})
 			return
 		}
+
+		ctrl.Log.Info("deleted member",
+			"drawUuid", member.DrawingUUID,
+			"memberUuid", member.UUID,
+			"name", member.Name,
+		)
 
 		c.JSON(http.StatusOK, DefaultResponse{
 			Status:  http.StatusOK,

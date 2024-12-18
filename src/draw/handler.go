@@ -76,6 +76,8 @@ func (ctrl *Controller) UpdateHandler() gin.HandlerFunc {
 		drawing := c.MustGet("drawing").(Drawing)
 		data := c.MustGet("data").(Drawing)
 
+		ctrl.Log.Info("updating drawing", "drawUuid", drawing.UUID.String())
+
 		_, err := ctrl.DB.NewUpdate().
 			Model(&data).
 			ExcludeColumn("uuid").
@@ -96,6 +98,8 @@ func (ctrl *Controller) UpdateHandler() gin.HandlerFunc {
 			})
 			return
 		}
+
+		ctrl.Log.Info("updated drawing", "drawUuid", drawing.UUID.String())
 
 		newDrawing := Drawing{}
 		ctrl.DB.NewSelect().
@@ -123,6 +127,11 @@ func (ctrl *Controller) CreateMemberHandler() gin.HandlerFunc {
 
 		member.DrawingUUID = drawing.UUID
 
+		ctrl.Log.Info("creating member",
+			"drawUuid", drawing.UUID.String(),
+			"name", member.Name,
+		)
+
 		_, err := ctrl.DB.NewInsert().Model(&member).Exec(c.Request.Context())
 		if err != nil {
 			ctrl.Log.Error(err.Error())
@@ -132,6 +141,12 @@ func (ctrl *Controller) CreateMemberHandler() gin.HandlerFunc {
 			})
 			return
 		}
+
+		ctrl.Log.Info("created member",
+			"drawUuid", drawing.UUID.String(),
+			"memberUuid", member.UUID.String(),
+			"name", member.Name,
+		)
 
 		c.JSON(http.StatusCreated, member)
 	}
@@ -163,5 +178,41 @@ func (ctrl *Controller) DeleteMemberHandler() gin.HandlerFunc {
 		}
 
 		c.Status(http.StatusNoContent)
+	}
+}
+
+// @Tags Drawing
+// @Summary Launch the drawing
+// @Produce json
+// @Param uuid path string true "Drawing UUID"
+// @Success 200
+// @Router /draw/{uuid}/launch [post]
+// @Description Launching a drawing means that
+// the drawing is now closed for new members
+// and the member get a secret link to check
+// the drawing results.
+func (ctrl *Controller) LaunchHandler() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		drawing := c.MustGet("drawing").(Drawing)
+
+		ctrl.Log.Info("launching drawing", "drawUuid", drawing.UUID.String())
+
+		_, err := ctrl.DB.NewUpdate().
+			Model(&drawing).
+			Set("launched_at = ?", time.Now()).
+			Where("uuid = ?", drawing.UUID).
+			Exec(c.Request.Context())
+		if err != nil {
+			ctrl.Log.Error(err.Error())
+			c.JSON(http.StatusInternalServerError, DefaultResponse{
+				Status:  http.StatusInternalServerError,
+				Message: "Failed to launch drawing",
+			})
+			return
+		}
+
+		ctrl.Log.Info("launched drawing", "drawUuid", drawing.UUID.String())
+
+		c.Status(http.StatusOK)
 	}
 }

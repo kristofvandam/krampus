@@ -18,19 +18,19 @@
   const onRemoveMember = (event) => {
     api.deleteMember(event.target.uuid.value)
       .then(() => {
-        api.getDraw(data.draw.uuid)
+        api.getDraw(fetch, data.draw.uuid)
           .then(draw => {
             data = { draw }
           })
       })
   }
 
-  const onPatchConfig = (event) => {
-    api.patchDrawConfig(data.draw.uuid, { config: {
-      chained: event.target.chained.checked
-    }})
+  const onPatchConfig = (config) => {
+    api.patchDrawConfig(data.draw.uuid, { config: 
+      { ...data.draw.config, ...config } 
+    })
       .then(() => {
-        api.getDraw(data.draw.uuid)
+        api.getDraw(fetch, data.draw.uuid)
           .then(draw => {
             data = { draw }
           })
@@ -41,13 +41,21 @@
 <h1 class="text-3xl">{m.draw_create()}</h1>
 <h3 class="text-2xl">{m.draw_config()}</h3>
 
-<form onsubmit={onPatchConfig}>
-  <label id="chained">
-    {m.draw_config_chained()}
-    <input type="checkbox" name="chained" checked={data.draw.config.chained} />
-  </label>
-  <button type="submit">{m.form_submit()}</button>
-</form>
+<label id="chained">
+  {m.draw_config_chained()}
+  <input type="checkbox" name="chained"
+    checked={data.draw.config.chained}
+    onchange={() => onPatchConfig({ chained: !data.draw.config.chained })}
+  />
+</label>
+
+<label id="price">
+  {m.draw_config_price()}
+  <input type="number" name="price"
+    value={data.draw.config.price}
+    onchange={(e) => onPatchConfig({ price: e.target.valueAsNumber })}
+  />
+</label>
 
 <h3 class="text-2xl">{m.member_title()}</h3>
 <form onsubmit={onCreateMember}>

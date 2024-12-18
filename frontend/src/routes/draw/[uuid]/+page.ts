@@ -7,7 +7,7 @@ type RouteParams = {
 };
 
 /** @type {import('./$types').PageLoad} */
-export async function load({ params }: { params: RouteParams }) {
-	const draw = await api.getDraw(params.uuid);
+export async function load({ fetch, params }: { params: RouteParams }) {
+	const draw = await api.getDraw(fetch, params.uuid);
 	return { draw };
 }
